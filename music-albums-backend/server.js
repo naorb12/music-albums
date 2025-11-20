@@ -1,16 +1,19 @@
 import express from "express";
+import cors from "cors";
+
 import { runDatabaseConnect } from "./src/database/database-client.js";
 import {
   addAlbum,
   getAlbumById,
   getAllAlbums,
   updateAlbum,
-  // deleteAlbum,
+  deleteAlbum,
 } from "./src/services/album-service.js";
 
 const port = 3000;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.listen(port, () => {
@@ -38,6 +41,7 @@ app.get("/albums/:id", async (req, res) => {
     if (!album) {
       return res.status(404).json({ error: "Album not found" });
     }
+    console.log("Found album ", id);
     res.status(200).json(album);
   } catch (err) {
     res.status(500).json({ error: "Couldn't get album." });
@@ -53,11 +57,10 @@ app.post("/albums", async (req, res) => {
         .status(400)
         .json({ error: "Album details are missing." + album });
     }
-
     const result = await addAlbum(album);
     res.status(201).json(result.insertedId);
   } catch (err) {
-    res.status(500).json({ error: "Couldn't add album" });
+    res.status(500).json(err);
   }
 });
 
@@ -82,6 +85,7 @@ app.put("/albums/:id", async (req, res) => {
 app.delete("/albums/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("Bckend: ID to delete: ", id);
     if (!id) {
       return res.status(400).json({ error: "No id" });
     }

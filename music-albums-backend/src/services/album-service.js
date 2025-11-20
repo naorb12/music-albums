@@ -1,63 +1,88 @@
+import { ObjectId } from "mongodb";
 import { client } from "../database/database-client.js";
 
 const db = client.db("music-store");
 const albumsCollection = db.collection("albums");
 
 export async function getAllAlbums() {
-  return albumsCollection.find({}).toArray();
+  try {
+    return await albumsCollection.find({}).toArray();
+  } catch (err) {
+    throw new Error("Couldn't fetch albums from DB " + err);
+  }
 }
 
 export async function getAlbumById(id) {
-  return albumsCollection.findOne({ _id: newObject(id) });
+  try {
+    console.log("Trying to find album ", id);
+    return await albumsCollection.findOne({ _id: new ObjectId(id) });
+  } catch {
+    console.log("couldnt get album by id");
+    throw new Error("Couldnt get album from DB");
+  }
 }
 
 export async function addAlbum(album) {
-  const albumCoverURL = await getAlbumCover(album.title);
-  return albumsCollection.insertOne({
-    title: album.title,
-    artist: album.artist,
-    year: album.year,
-    genre: album.genre,
-    rating: album.rating ?? 0,
-    reviewsCount: album.reviewsCount ?? 0,
-    albumCoverURL: albumCoverURL,
-  });
+  try {
+    const exist = await albumsCollection.findOne({
+      title: album.title,
+      artist: album.artist,
+    });
+    if (exist) {
+      console.log(
+        "Album " + album.title + " by " + album.artist + " already exists."
+      );
+      throw new Error(
+        "Album " + album.title + " by " + album.artist + " already exists."
+      );
+    }
+    console.log("Trying to add album");
+    const albumCoverURLS = await getAlbumCover(album.title, album.artist);
+    return await albumsCollection.insertOne({
+      title: album.title,
+      artist: album.artist,
+      year: album.year,
+      genre: album.genre,
+      rating: album.rating ?? 0,
+      reviewsCount: album.reviewsCount ?? 0,
+      albumCoverURL: albumCoverURLS,
+    });
+  } catch (err) {
+    throw new Error("DB error: ", err);
+  }
 }
 
 export async function updateAlbum(id, album) {
-  return albumsCollection.findOneAndUpdate(
+  return await albumsCollection.findOneAndUpdate(
     { _id: id },
     { $set: album },
     { returnDocument: "after" }
   );
 }
 
-async function getAlbumCover(title) {
+export async function deleteAlbum(id) {
+  try {
+    return await albumsCollection.deleteOne({ _id: new ObjectId(id) });
+  } catch (err) {
+    console.log("Couldnt deleterr ", err);
+    throw new Error("Couldn't delete from DB ", err);
+  }
+}
+
+async function getAlbumCover(title, artist) {
   try {
     // 1. Search release-group by album title
+    const newTitle = title.replaceAll(" ", "+");
+    const newArtist = artist.replaceAll(" ", "+");
+
+    const LAST_FM_API_KEY = "80c050775e4d5ee4ad3619d0b0b51a52";
     const response = await fetch(
-      `https://musicbrainz.org/ws/2/release-group/?query=release:${title}&fmt=json`
+      `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${LAST_FM_API_KEY}&artist=${newArtist}&album=${newTitle}&format=json`
     );
     const data = await response.json();
-    const releaseGroupMbid = data["release-groups"]?.[0]?.id;
-    if (!releaseGroupMbid) return null;
+    const imagesURLS = data.album.image;
 
-    // 2. Get actual release MBID (required for CAA)
-    const releasesRes = await fetch(
-      `https://musicbrainz.org/ws/2/release?release-group=${releaseGroupMbid}&fmt=json`
-    );
-    const releasesData = await releasesRes.json();
-    const releaseMbid = releasesData.releases?.[0]?.id;
-    if (!releaseMbid) return null;
-
-    // 3. Fetch cover art from CAA
-    const coverRes = await fetch(
-      `https://coverartarchive.org/release/${releaseMbid}`
-    );
-    const coverData = await coverRes.json();
-
-    // Return thumbnails
-    return coverData.images?.[0]?.thumbnails;
+    return imagesURLS;
   } catch (err) {
     console.error("Couldn't fetch data:", err);
     return null;

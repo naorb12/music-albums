@@ -1,14 +1,21 @@
 import Grid from "@mui/material/Grid";
 import AlbumCard from "./AlbumCard";
+import Box from "@mui/material/Box";
 
-export default function AlbumGrid({ albums }) {
+export default function AlbumGrid({ albums, handleDeleteAlbum }) {
   return (
-    <Grid container spacing={3}>
-      {albums.map((album) => (
-        <Grid item xs={12} sm={6} md={3} key={album.id}>
-          <AlbumCard album={album} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box sx={{ margin: 5 }}>
+      <Grid container spacing={1} sx={{ maxWidth: "200" }}>
+        {albums.map((album) => (
+          <Grid item key={album._id}>
+            <AlbumCard
+              key={album._id}
+              album={album}
+              handleDeleteAlbum={handleDeleteAlbum}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
