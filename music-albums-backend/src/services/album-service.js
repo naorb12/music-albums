@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { client } from "../database/database-client.js";
+import "dotenv/config";
 
 const db = client.db("music-store");
 const albumsCollection = db.collection("albums");
@@ -76,9 +77,8 @@ async function getAlbumCover(title, artist) {
     const newTitle = title.replaceAll(" ", "+");
     const newArtist = artist.replaceAll(" ", "+");
 
-    const LAST_FM_API_KEY = "80c050775e4d5ee4ad3619d0b0b51a52";
     const response = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${LAST_FM_API_KEY}&artist=${newArtist}&album=${newTitle}&format=json`
+      `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${process.env.LAST_FM_API_KEY}&artist=${newArtist}&album=${newTitle}&format=json`
     );
     const data = await response.json();
     const imagesURLS = data.album.image;
