@@ -48,6 +48,7 @@ export async function addAlbum(album) {
       albumCoverURL: albumCoverURLS,
     });
   } catch (err) {
+    console.log(err);
     throw new Error("DB error: ", err);
   }
 }

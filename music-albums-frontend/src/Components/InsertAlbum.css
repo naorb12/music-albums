@@ -1,0 +1,15 @@
+.form-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.text-field {
+  margin: 5px;
+}
+
+.add-button {
+  margin: 5px;
+}

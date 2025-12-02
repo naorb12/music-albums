@@ -18,6 +18,22 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.album-grid-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.album-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 8px;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,26 +1,42 @@
 import Link from "@mui/material/Link";
-export default function Header() {
+import { useLocation, useNavigate } from "react-router";
+export default function Header({ isLoggedIn, setIsLoggedIn }) {
+  const navigate = useNavigate();
+  const path = useLocation();
+
+  const showHeader = path.pathname !== "/sign-in";
   return (
     <>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "0",
-          maxWidth: "100%",
-        }}
-      >
-        <Link
-          component="button"
-          variant="body2"
-          onClick={() => {
-            console.info("I'm a button.");
+      {showHeader && (
+        <header
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0",
+            maxWidth: "100%",
           }}
-          color="inherit"
         >
-          Sign In
-        </Link>
-      </header>
+          {!isLoggedIn ? (
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => navigate("/sign-in")}
+              color="inherit"
+            >
+              Sign In
+            </Link>
+          ) : (
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => setIsLoggedIn(false)}
+              color="inherit"
+            >
+              Log Out
+            </Link>
+          )}
+        </header>
+      )}
     </>
   );
 }

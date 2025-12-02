@@ -6,8 +6,6 @@ export default function HomePage() {
   const [albums, setAlbums] = useState([]);
   const [errorLabel, setErrorLabel] = useState();
 
-  console.log("Front albums ", albums);
-
   async function getAlbums() {
     try {
       const response = await fetch("http://localhost:3000/albums");
@@ -41,7 +39,6 @@ export default function HomePage() {
         setErrorLabel("Album already exists.");
         return;
       }
-      const data = await result.json();
       getAlbums();
     } catch (err) {
       console.log("Couldnt add album " + err);

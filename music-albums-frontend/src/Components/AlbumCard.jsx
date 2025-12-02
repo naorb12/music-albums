@@ -13,11 +13,14 @@ export default function AlbumCard({ album, handleDeleteAlbum }) {
       component={Link}
       to={`/albums/id/${album._id}`}
       sx={{
-        height: "100%",
         textDecoration: "none",
         color: "inherit",
         display: "flex",
         flexDirection: "column",
+        padding: 0,
+        margin: "6px",
+        alignItems: "center",
+        backgroundColor: "#faeed7ff",
       }}
     >
       {album.albumCoverURL && (
@@ -30,14 +33,17 @@ export default function AlbumCard({ album, handleDeleteAlbum }) {
           }
           alt={album.title}
           sx={{
-            width: "100",
-            height: "auto",
+            width: "150px",
+            height: "150px",
+            padding: "8px",
             objectFit: "contain", // important
           }}
         />
       )}
 
-      <CardContent sx={{ flexGrow: 0 }}>
+      <CardContent
+        sx={{ flexGrow: 0, width: "160px", height: "150px", padding: "0px" }}
+      >
         <Typography variant="h6" color="text.secondary" noWrap>
           {album.title}
         </Typography>
