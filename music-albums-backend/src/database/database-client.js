@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
+import "dotenv/config";
 
-export const DB_URL =
-  "mongodb+srv://naorb12_db_user:4WciFNp1iA3w6bFI@cluster0.2h73vsn.mongodb.net/?appName=Cluster0";
+export const DB_URL = process.env.DB_URI;
 
 export const client = new MongoClient(DB_URL, {
   serverApi: {
