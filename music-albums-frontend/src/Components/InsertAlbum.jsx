@@ -4,10 +4,17 @@ import { useState } from "react";
 import "./InsertAlbum.css";
 
 export default function InsertAlbum({ onClick, setErrorLabel }) {
-  const [title, setTitle] = useState();
-  const [artist, setArtist] = useState();
-  const [year, setYear] = useState();
-  const [genre, setGenre] = useState();
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [year, setYear] = useState("");
+  const [genre, setGenre] = useState("");
+
+  function resetInputs() {
+    setTitle("");
+    setArtist("");
+    setYear("");
+    setGenre("");
+  }
 
   return (
     <>
@@ -74,8 +81,13 @@ export default function InsertAlbum({ onClick, setErrorLabel }) {
           className="add-button"
           variant="outlined"
           type="submit"
-          onClick={() => onClick(title, artist, year, genre)}
-          disabled={!title || !artist || !year || !genre}
+          onClick={() => {
+            onClick(title, artist, year, genre);
+            resetInputs();
+          }}
+          disabled={
+            title === "" || artist === "" || year === "" || genre === ""
+          }
         >
           Add Album
         </Button>
