@@ -25,6 +25,16 @@ export default function HomePage({ isAdmin }) {
             album.artist.toLowerCase().trim() === artist.toLowerCase().trim()
         )
       ) {
+        setAlbums((prev) => {
+          const newAlbum = {
+            title: title,
+            artist: artist,
+            year: year,
+            genre: genre,
+          };
+          const newAlbums = [...prev, newAlbum];
+          return newAlbums;
+        });
         const result = await fetch("http://localhost:3000/albums", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -50,6 +60,31 @@ export default function HomePage({ isAdmin }) {
       if (!id || !title || !artist || !year || !genre) {
         throw new Error("Edit details missing");
       }
+
+      setAlbums((albums) => {
+        const newAlbums = albums.map((album) => {
+          if (album._id === id) {
+            let editedAlbum = {
+              ...album,
+              title: title,
+              artist: artist,
+              year: year,
+              genre: genre,
+            };
+            if (editedAlbum.title.toLowerCase() === album.title.toLowerCase()) {
+              editedAlbum = {
+                ...editedAlbum,
+                albumCoverURL: album.albumCoverURL,
+              };
+            }
+
+            return editedAlbum;
+          } else {
+            return album;
+          }
+        });
+        return newAlbums;
+      });
       const response = await fetch(`http://localhost:3000/albums/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -71,6 +106,7 @@ export default function HomePage({ isAdmin }) {
   async function deleteAlbum(id) {
     console.log("Deleting album ", id);
     try {
+      setAlbums((albums) => albums.filter((album) => album._id !== id));
       const res = await fetch(`http://localhost:3000/albums/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
