@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import userRoutes from "./src/routes/users.routes.js";
 import albumRoutes from "./src/routes/albums.routes.js";
+import reviewRoutes from "./src/routes/reviews.routes.js";
 
 import { runDatabaseConnect } from "./src/database/database-client.js";
 
@@ -19,3 +20,4 @@ await runDatabaseConnect();
 
 app.use("/albums", albumRoutes);
 app.use("/users", userRoutes);
+app.use("/reviews", reviewRoutes);

@@ -5,7 +5,7 @@ import {
   getAllAlbums,
   updateAlbum,
   deleteAlbum,
-} from "../services/album-service.js";
+} from "../services/album.service.js";
 
 const router = new Router();
 
