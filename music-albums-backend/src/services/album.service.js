@@ -37,7 +37,6 @@ export async function addAlbum(album) {
         "Album " + album.title + " by " + album.artist + " already exists."
       );
     }
-    console.log("Trying to add album");
     const albumCoverURLS = await getAlbumCover(album.title, album.artist);
     return await albumsCollection.insertOne({
       title: album.title,
@@ -55,11 +54,18 @@ export async function addAlbum(album) {
 }
 
 export async function updateAlbum(id, album) {
-  return await albumsCollection.findOneAndUpdate(
-    { _id: id },
-    { $set: album },
-    { returnDocument: "after" }
-  );
+  try {
+    const albumCoverURLS = await getAlbumCover(album.title, album.artist);
+
+    const updatedAlbum = { ...album, albumCoverURL: albumCoverURLS };
+    return await albumsCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: updatedAlbum },
+      { returnDocument: "after" }
+    );
+  } catch (err) {
+    throw new Error("Couldnt fetch album covers");
+  }
 }
 
 export async function deleteAlbum(id) {

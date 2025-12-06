@@ -45,6 +45,29 @@ export default function HomePage({ isAdmin }) {
     }
   }
 
+  async function editAlbum(id, title, artist, year, genre) {
+    try {
+      if (!id || !title || !artist || !year || !genre) {
+        throw new Error("Edit details missing");
+      }
+      const response = await fetch(`http://localhost:3000/albums/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: id,
+          title: title,
+          artist: artist,
+          year: year,
+          genre: genre,
+        }),
+      });
+      const data = await response.json();
+      getAlbums();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function deleteAlbum(id) {
     console.log("Deleting album ", id);
     try {
@@ -71,6 +94,7 @@ export default function HomePage({ isAdmin }) {
         <AlbumGrid
           albums={albums}
           handleDeleteAlbum={deleteAlbum}
+          handleEditAlbum={editAlbum}
           isAdmin={isAdmin}
         />
       )}

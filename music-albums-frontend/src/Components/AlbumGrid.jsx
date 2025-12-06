@@ -2,7 +2,12 @@ import Grid from "@mui/material/Grid";
 import AlbumCard from "./AlbumCard";
 import Box from "@mui/material/Box";
 
-export default function AlbumGrid({ albums, handleDeleteAlbum, isAdmin }) {
+export default function AlbumGrid({
+  albums,
+  handleDeleteAlbum,
+  handleEditAlbum,
+  isAdmin,
+}) {
   return (
     <Box sx={{ margin: 5 }}>
       <Grid container spacing={2} sx={{ maxWidth: "900" }}>
@@ -19,6 +24,7 @@ export default function AlbumGrid({ albums, handleDeleteAlbum, isAdmin }) {
                 key={album._id}
                 album={album}
                 handleDeleteAlbum={handleDeleteAlbum}
+                handleEditAlbum={handleEditAlbum}
                 isAdmin={isAdmin}
               />
             </Grid>

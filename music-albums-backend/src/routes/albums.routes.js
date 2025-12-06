@@ -54,10 +54,12 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+
     if (!id) {
       return res.status(400).json({ error: "No id" });
     }
     const album = req.body;
+    console.log(album);
 
     const result = await updateAlbum(id, album);
     if (!result.value) {
