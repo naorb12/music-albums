@@ -1,6 +1,6 @@
 import Link from "@mui/material/Link";
 import { useLocation, useNavigate } from "react-router";
-export default function Header({ isLoggedIn, setIsLoggedIn }) {
+export default function Header({ user, setUser }) {
   const navigate = useNavigate();
   const path = useLocation();
 
@@ -16,7 +16,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
             maxWidth: "100%",
           }}
         >
-          {!isLoggedIn ? (
+          {user === "" ? (
             <Link
               component="button"
               variant="body2"
@@ -26,14 +26,17 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
               Sign In
             </Link>
           ) : (
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => setIsLoggedIn(false)}
-              color="inherit"
-            >
-              Log Out
-            </Link>
+            <div>
+              <label htmlFor="">Hello {user}, </label>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => setUser("")}
+                color="inherit"
+              >
+                Log Out
+              </Link>
+            </div>
           )}
         </header>
       )}

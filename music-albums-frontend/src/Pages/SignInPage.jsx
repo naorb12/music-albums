@@ -1,12 +1,10 @@
 import SigIn from "../Components/SignIn";
-import { useNavigate } from "react-router";
 
-export default function SignInPage({ setIsLoggedIn }) {
-  const navigate = useNavigate();
+export default function SignInPage({ setUser }) {
   return (
     <>
       <h2>Please Sign In:</h2>
-      <SigIn setIsLoggedIn={setIsLoggedIn} navigate={navigate} />
+      <SigIn setUser={setUser} />
     </>
   );
 }

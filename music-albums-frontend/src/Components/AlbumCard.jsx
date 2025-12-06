@@ -7,7 +7,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Link } from "react-router";
 import IconButton from "@mui/material/IconButton";
 
-export default function AlbumCard({ album, handleDeleteAlbum }) {
+export default function AlbumCard({ album, handleDeleteAlbum, isAdmin }) {
   return (
     <Card
       component={Link}
@@ -59,16 +59,18 @@ export default function AlbumCard({ album, handleDeleteAlbum }) {
         <Rating name="disabled" value={album.rating} disabled>
           {album.reviewsCount}
         </Rating>
-        <IconButton
-          onClick={(e) => {
-            console.log("Trying to delete ID ", album._id);
-            e.preventDefault();
-            e.stopPropagation();
-            handleDeleteAlbum(album._id);
-          }}
-        >
-          <DeleteOutlineIcon />
-        </IconButton>
+        {isAdmin && (
+          <IconButton
+            onClick={(e) => {
+              console.log("Trying to delete ID ", album._id);
+              e.preventDefault();
+              e.stopPropagation();
+              handleDeleteAlbum(album._id);
+            }}
+          >
+            <DeleteOutlineIcon />
+          </IconButton>
+        )}
       </CardContent>
     </Card>
   );

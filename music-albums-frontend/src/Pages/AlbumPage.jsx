@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import AlbumCard from "../Components/AlbumCard";
 
-export default function AlbumPage() {
+export default function AlbumPage({ isAdmin }) {
   const { _id } = useParams();
   const [album, setAlbum] = useState();
 

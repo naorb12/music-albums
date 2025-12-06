@@ -6,7 +6,6 @@ const users = db.collection("users");
 export async function signIn(userName, password) {
   try {
     const user = await users.findOne({ userName: userName });
-    console.log("user: ", user);
     if (!user) {
       console.log("User not found, adding it to db.");
       await users.insertOne({ userName: userName, password: password });
@@ -19,6 +18,6 @@ export async function signIn(userName, password) {
     }
     return true;
   } catch (err) {
-    throw new Error("DB error  ", err);
+    throw err;
   }
 }

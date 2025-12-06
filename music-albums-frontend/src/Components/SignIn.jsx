@@ -2,26 +2,29 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
-export default function SigIn({ setIsLoggedIn, navigate }) {
-  const [userName, setUserName] = useState();
-  const [password, setPassowrd] = useState();
+export default function SigIn({ setUser }) {
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [errorLabel, setErrorLabel] = useState("");
 
-  async function handleSignIn(params) {
+  async function handleSignIn() {
     try {
-      const response = await fetch("http://localhost:3000/sign-in", {
+      const response = await fetch("http://localhost:3000/users/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userName: userName, password: password }),
       });
-      const data = await response.json();
-      console.log(data);
-
-      setIsLoggedIn(true);
-      navigate("/albums");
+      if (response.status === 200) {
+        setUser(userName);
+        navigate("/albums");
+      } else if (response.status === 401) {
+        setErrorLabel("User or Password don't match");
+      }
     } catch (err) {
-      console.log("Couldn't sign in, ", err.status);
+      console.log("Couldn't sign in, ", err);
     }
   }
   return (
@@ -38,12 +41,12 @@ export default function SigIn({ setIsLoggedIn, navigate }) {
         id="outlined-basic"
         label="Password"
         variant="outlined"
-        onChange={(e) => setPassowrd(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <Button variant="contained" color="success" onClick={handleSignIn}>
         Sign In
       </Button>
-      <label>{errorLabel}</label>
+      <label style={{ color: "red" }}>{errorLabel}</label>
     </Stack>
   );
 }

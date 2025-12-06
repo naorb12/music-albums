@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import AlbumGrid from "../Components/AlbumGrid";
 import InsertAlbum from "../Components/InsertAlbum";
 
-export default function HomePage() {
+export default function HomePage({ isAdmin }) {
   const [albums, setAlbums] = useState([]);
   const [errorLabel, setErrorLabel] = useState();
 
@@ -68,7 +68,11 @@ export default function HomePage() {
       <InsertAlbum onClick={addAlbum} setErrorLabel={setErrorLabel} />
       {errorLabel && <label color="red">{errorLabel}</label>}
       {albums.length > 0 && (
-        <AlbumGrid albums={albums} handleDeleteAlbum={deleteAlbum} />
+        <AlbumGrid
+          albums={albums}
+          handleDeleteAlbum={deleteAlbum}
+          isAdmin={isAdmin}
+        />
       )}
     </div>
   );

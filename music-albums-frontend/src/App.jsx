@@ -7,19 +7,20 @@ import AlbumPage from "./Pages/AlbumPage";
 import SignInPage from "./Pages/SignInPage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState("");
+  const isAdmin = user === "1";
 
   return (
     <BrowserRouter>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Header user={user} setUser={setUser} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/albums" element={<HomePage />} />
-        <Route path="/albums/id/:_id" element={<AlbumPage />} />
+        <Route path="/" element={<HomePage isAdmin={isAdmin} />} />
+        <Route path="/albums" element={<HomePage isAdmin={isAdmin} />} />
         <Route
-          path="/sign-in"
-          element={<SignInPage setIsLoggedIn={setIsLoggedIn} />}
+          path="/albums/id/:_id"
+          element={<AlbumPage isAdmin={isAdmin} />}
         />
+        <Route path="/sign-in" element={<SignInPage setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
   );
