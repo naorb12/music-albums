@@ -10,6 +10,7 @@ export default function AlbumCardView({
   handleDeleteAlbum,
   isAdmin,
   setIsEditing,
+  rating,
 }) {
   const stop = (e) => {
     e.preventDefault();
@@ -31,9 +32,11 @@ export default function AlbumCardView({
         <Typography variant="body2" color="text.secondary" noWrap>
           {album.year}
         </Typography>
-        <Rating name="disabled" value={album.rating} disabled>
-          {album.reviewsCount}
-        </Rating>
+        {rating && (
+          <Rating name="disabled" value={album.rating} disabled>
+            {album.reviewsCount}
+          </Rating>
+        )}
       </div>
 
       {isAdmin && (

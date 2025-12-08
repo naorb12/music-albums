@@ -11,6 +11,7 @@ export default function AlbumCard({
   handleDeleteAlbum,
   handleEditAlbum,
   isAdmin,
+  rating,
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -57,6 +58,7 @@ export default function AlbumCard({
             "&:last-child": {
               paddingBottom: 1,
             },
+            textAlign: "center",
           }}
         >
           {!isEditing && (
@@ -65,6 +67,7 @@ export default function AlbumCard({
               handleDeleteAlbum={handleDeleteAlbum}
               isAdmin={isAdmin}
               setIsEditing={setIsEditing}
+              rating={rating}
             />
           )}
           {isEditing && (

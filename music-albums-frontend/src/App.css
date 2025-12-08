@@ -2,6 +2,9 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+h1 {
   text-align: center;
 }
 
@@ -35,6 +38,10 @@
   padding: 8px;
 }
 
+#album-page {
+  width: 100%;
+  max-width: 1200px;
+}
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

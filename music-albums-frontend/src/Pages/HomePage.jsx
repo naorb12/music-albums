@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import AlbumGrid from "../Components/AlbumGrid";
-import InsertAlbum from "../Components/InsertAlbum";
+import InsertAlbum from "../Components/InsertAlbum/InsertAlbum.jsx";
 
 export default function HomePage({ isAdmin }) {
   const [albums, setAlbums] = useState([]);

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import AlbumCard from "../Components/AlbumCard";
-
+import AlbumHeader from "../Components/AlbumHeader/AlbumHeader.jsx";
+import ReviewSummary from "../Components/ReviewSummary/ReviewSummary.jsx";
 export default function AlbumPage({ isAdmin }) {
   const { _id } = useParams();
   const [album, setAlbum] = useState();
@@ -22,5 +22,14 @@ export default function AlbumPage({ isAdmin }) {
     getAlbum(_id);
   }, [_id]);
 
-  return <>{album && <AlbumCard album={album} />}</>;
+  return (
+    <>
+      {album && (
+        <div id="album-page">
+          <AlbumHeader album={album} />
+          <ReviewSummary album={album} />
+        </div>
+      )}
+    </>
+  );
 }

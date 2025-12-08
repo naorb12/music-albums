@@ -26,6 +26,7 @@ export default function AlbumGrid({
                 handleDeleteAlbum={handleDeleteAlbum}
                 handleEditAlbum={handleEditAlbum}
                 isAdmin={isAdmin}
+                rating={true}
               />
             </Grid>
           ))}

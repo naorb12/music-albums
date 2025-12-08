@@ -1,0 +1,21 @@
+#album-header-wrapper {
+  display: flex;
+  align-items: self-start;
+  gap: 24px;
+}
+
+#album-details {
+  display: flex;
+  flex-direction: column;
+  justify-items: start;
+}
+
+#links {
+  display: flex;
+  flex-direction: row;
+}
+
+img {
+  width: 300px;
+  height: 300px;
+}

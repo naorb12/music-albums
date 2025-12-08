@@ -1,0 +1,12 @@
+#rating-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+#rating {
+  padding: 15px;
+}
+
+#linear-rating {
+  padding: 15px;
+}
