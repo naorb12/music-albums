@@ -38,6 +38,7 @@ export async function addAlbum(album) {
       );
     }
     const albumCoverURLS = await getAlbumCover(album.title, album.artist);
+    const albumLinks = await getAlbumLinks(album.title, album.artist);
     return await albumsCollection.insertOne({
       title: album.title,
       artist: album.artist,
@@ -46,6 +47,7 @@ export async function addAlbum(album) {
       rating: album.rating ?? 0,
       reviewsCount: album.reviewsCount ?? 0,
       albumCoverURL: albumCoverURLS,
+      albumLinks: albumLinks,
     });
   } catch (err) {
     console.log(err);
@@ -94,4 +96,21 @@ async function getAlbumCover(title, artist) {
     console.error("Couldn't fetch data:", err);
     return null;
   }
+}
+
+async function getAlbumLinks(title, artist) {
+  const youtube = `https://music.youtube.com/search?q=${title.trim()}+${artist.trim()}`;
+  const spotify = "https://open.spotify.com/";
+  let appleMusic = "https://music.apple.com/";
+  try {
+    const response = await fetch(
+      `https://itunes.apple.com/search?term=album+${title.trim()}+${artist.trim()}&entity=album`
+    );
+    const data = await response.json();
+
+    appleMusic = data.results[0].collectionViewUrl;
+  } catch (err) {
+    console.log("Couldn't fetch links for applemusic/spotify, ", err);
+  }
+  return { spotify: spotify, appleMusic: appleMusic, youtube: youtube };
 }
