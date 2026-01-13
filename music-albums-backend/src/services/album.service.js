@@ -4,6 +4,7 @@ import "dotenv/config";
 
 const db = client.db("music-store");
 const albumsCollection = db.collection("albums");
+const reviewsCollection = db.collection("reviews");
 
 export async function getAllAlbums() {
   try {
@@ -76,6 +77,18 @@ export async function deleteAlbum(id) {
   } catch (err) {
     console.log("Couldnt deleterr ", err);
     throw new Error("Couldn't delete from DB ", err);
+  }
+}
+
+export async function calcReviews(id) {
+  try {
+    const reviews = await reviewsCollection.find({ albumId: id }).toArray();
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const rating = reviews.length === 0 ? 0 : sum / reviews.length;
+    console.log(rating);
+  } catch (err) {
+    console.log("Couldnt calculate reviews");
+    throw err;
   }
 }
 

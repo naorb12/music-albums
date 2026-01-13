@@ -13,9 +13,11 @@ router.post("/sign-in", async (req, res) => {
         .json({ eror: "Username or Password details are missing" });
     }
 
-    const response = await signIn(userName, password);
-    if (response) {
-      return res.status(200).json("Sign in succesfull");
+    const token = await signIn(userName, password);
+    console.log(token);
+
+    if (token) {
+      return res.status(200).json({ token });
     }
   } catch (err) {
     if (err == "Error: Passwords don't match") {

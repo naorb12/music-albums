@@ -1,4 +1,6 @@
 import { client } from "../database/database-client.js";
+import "dotenv/config";
+import jwt from "jsonwebtoken";
 
 const db = client.db("music-store");
 const users = db.collection("users");
@@ -16,7 +18,15 @@ export async function signIn(userName, password) {
       console.log("Passwords do not match");
       throw new Error("Passwords don't match");
     }
-    return true;
+    const token = jwt.sign(
+      {
+        userId: userName,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return token;
   } catch (err) {
     throw err;
   }
