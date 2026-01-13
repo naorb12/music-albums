@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { calcReviews, getAlbumById } from "../services/album.service.js";
+import {
+  calcReviewsAndUpdate,
+  getAlbumById,
+} from "../services/album.service.js";
 import { addReview } from "../services/reviews.service.js";
 import { auth } from "../middlewares/auth.js";
 const router = new Router();
@@ -21,7 +24,7 @@ router.post("/:albumId", auth, async (req, res) => {
     }
 
     const result = await addReview(userId, albumId, rating);
-    await calcReviews(albumId);
+    await calcReviewsAndUpdate(albumId);
     res.status(200).json({ message: "Review added" });
   } catch (err) {
     res.status(500).json({ error: `error occured adding review: ${err}` });
