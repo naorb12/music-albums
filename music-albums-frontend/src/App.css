@@ -21,17 +21,9 @@ h1 {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.album-grid-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .album-grid {
-  width: 100%;
-  max-width: 1200px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   flex-direction: row;
   flex-wrap: wrap;
   margin: 0 auto;

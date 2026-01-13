@@ -10,16 +10,10 @@ export default function AlbumGrid({
 }) {
   return (
     <Box sx={{ margin: 5 }}>
-      <Grid container spacing={2} sx={{ maxWidth: "900" }}>
+      <Grid container spacing={2} sx={{ maxWidth: "1200" }}>
         <div className="album-grid">
           {albums.map((album) => (
-            <Grid
-              key={album._id}
-              sx={{
-                display: "flex",
-                justifyContent: "start",
-              }}
-            >
+            <Grid key={album._id}>
               <AlbumCard
                 key={album._id}
                 album={album}
