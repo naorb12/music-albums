@@ -10,9 +10,7 @@ export default function ReviewSummary({ album }) {
   const [rating, setRating] = useState(album.rating);
 
   async function handleAddReview(albumId, newRating) {
-    const previousRating = rating;
     try {
-      setRating(newRating);
       const token = localStorage["token"];
       const response = await fetch(`http://localhost:3000/reviews/${albumId}`, {
         method: "POST",
@@ -26,7 +24,6 @@ export default function ReviewSummary({ album }) {
       });
     } catch (err) {
       console.log("Couldnt add review ", err);
-      setRating(previousRating);
     }
   }
 

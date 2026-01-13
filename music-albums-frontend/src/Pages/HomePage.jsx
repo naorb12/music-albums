@@ -16,6 +16,10 @@ export default function HomePage({ isAdmin }) {
     }
   }
 
+  useEffect(() => {
+    getAlbums();
+  }, []);
+
   async function addAlbum(title, artist, year, genre) {
     try {
       if (

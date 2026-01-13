@@ -80,13 +80,20 @@ export async function deleteAlbum(id) {
   }
 }
 
-export async function calcReviewsAndUpdate(id) {
+export async function calcReviewsAndUpdate(id, newRating, countAdded) {
   try {
-    const reviews = await reviewsCollection.find({ albumId: id }).toArray();
-    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
-    const rating = reviews.length === 0 ? 0 : sum / reviews.length;
     const album = await getAlbumById(id);
-    album.rating = rating;
+    if (countAdded) {
+      album.rating =
+        (album.rating * album.reviewsCount + newRating) /
+        (album.reviewsCount + countAdded);
+      album.reviewsCount += countAdded;
+    } else {
+      const reviews = await reviewsCollection.find({ albumId: id }).toArray();
+      const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+      const rating = reviews.length === 0 ? 0 : sum / reviews.length;
+      album.rating = rating;
+    }
     const result = await updateAlbum(id, album);
   } catch (err) {
     console.log("Couldnt calculate reviews");
