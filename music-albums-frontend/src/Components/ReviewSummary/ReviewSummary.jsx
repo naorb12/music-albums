@@ -2,8 +2,34 @@ import "./ReviewSummary.css";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import RatingBars from "./RatingBars";
+import AddReview from "./AddReview";
+import { useState } from "react";
+import { isLoggedIn } from "../../utils/auth";
 
 export default function ReviewSummary({ album }) {
+  const [rating, setRating] = useState(album.rating);
+
+  async function handleAddReview(albumId, newRating) {
+    const previousRating = rating;
+    try {
+      setRating(newRating);
+      const token = localStorage["token"];
+      const response = await fetch(`http://localhost:3000/reviews/${albumId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          rating: newRating,
+        }),
+      });
+    } catch (err) {
+      console.log("Couldnt add review ", err);
+      setRating(previousRating);
+    }
+  }
+
   return (
     <>
       <div id="rating-wrapper">
@@ -12,9 +38,9 @@ export default function ReviewSummary({ album }) {
             Reviews
           </Typography>
           <Typography variant="h3" gutterBottom sx={{ color: "black" }}>
-            {album.rating}
+            {rating}
           </Typography>
-          <Rating disabled value={album.Rating} />
+          <Rating name="read-only" value={rating} readOnly />
           <Typography
             variant="h6"
             gutterBottom
@@ -27,6 +53,9 @@ export default function ReviewSummary({ album }) {
           <RatingBars stats={{ 5: 12, 4: 7, 3: 3, 2: 1, 1: 0 }} />
         </div>
       </div>
+      {isLoggedIn() && (
+        <AddReview albumId={album.id} onAddReview={handleAddReview} />
+      )}
     </>
   );
 }

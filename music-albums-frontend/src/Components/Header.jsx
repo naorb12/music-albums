@@ -31,7 +31,10 @@ export default function Header({ user, setUser }) {
               <Link
                 component="button"
                 variant="body2"
-                onClick={() => setUser("")}
+                onClick={() => {
+                  setUser("");
+                  localStorage.removeItem("token");
+                }}
                 color="inherit"
               >
                 Log Out
