@@ -31,9 +31,10 @@ h1 {
 }
 
 #album-page {
-  width: 100%;
-  max-width: 1200px;
+  width: 800px;
+  max-width: 100%;
 }
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
