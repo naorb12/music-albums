@@ -14,8 +14,15 @@ router.post("/:albumId", auth, async (req, res) => {
   const { rating } = req.body;
   const userId = req.user.id;
 
-  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    return res.status(400).json({ error: "Rating must be between 1 and 5" });
+  if (
+    typeof rating !== "number" ||
+    rating < 0.5 ||
+    rating > 5 ||
+    rating % 0.5 !== 0
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Rating must be between 0.5 and 5 in 0.5 steps" });
   }
   try {
     const exist = await getAlbumById(albumId);

@@ -21,7 +21,7 @@ function getLabelText(value) {
 }
 
 export default function AddReview({ albumId, onAddReview }) {
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(-1);
 
   return (
