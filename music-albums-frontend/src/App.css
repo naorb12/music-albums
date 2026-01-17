@@ -4,8 +4,15 @@
   padding: 2rem;
 }
 
-h1 {
+.page-title {
   text-align: center;
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-transform: lowercase;
+  color: #ffffffec;
+  margin-bottom: 2.5rem;
+  opacity: 0.95;
 }
 
 .logo {

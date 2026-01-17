@@ -26,7 +26,7 @@ export default function HomePage({ isAdmin }) {
         !albums.some(
           (album) =>
             album.title.toLowerCase().trim() === title.toLowerCase().trim() &&
-            album.artist.toLowerCase().trim() === artist.toLowerCase().trim()
+            album.artist.toLowerCase().trim() === artist.toLowerCase().trim(),
         )
       ) {
         setAlbums((prev) => {
@@ -127,7 +127,7 @@ export default function HomePage({ isAdmin }) {
 
   return (
     <div>
-      <h1>the albums mine.</h1>
+      <h1 className="page-title">albums on repeat.</h1>
       <InsertAlbum onClick={addAlbum} setErrorLabel={setErrorLabel} />
       {errorLabel && <label color="red">{errorLabel}</label>}
       {albums.length > 0 && (
