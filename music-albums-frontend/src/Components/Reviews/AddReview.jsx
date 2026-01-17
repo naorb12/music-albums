@@ -31,9 +31,9 @@ export default function AddReview({ albumId, onAddReview }) {
   const [hover, setHover] = useState(-1);
   const [comment, setComment] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!rating) return;
-    onAddReview(albumId, rating, comment);
+    await onAddReview(albumId, rating, comment);
     setRating(0);
     setComment("");
   };

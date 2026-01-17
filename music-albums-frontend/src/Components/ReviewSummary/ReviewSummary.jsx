@@ -2,10 +2,21 @@ import "./ReviewSummary.css";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import RatingBars from "./RatingBars";
-import { useState } from "react";
 
-export default function ReviewSummary({ album }) {
-  const [rating, setRating] = useState(album.rating);
+export default function ReviewSummary({ album, reviews }) {
+  console.log(reviews);
+  const reviewsStats = {
+    1: reviews.filter((review) => review.rating > 0 && review.rating <= 1)
+      .length,
+    2: reviews.filter((review) => review.rating > 1 && review.rating <= 2)
+      .length,
+    3: reviews.filter((review) => review.rating > 2 && review.rating <= 3)
+      .length,
+    4: reviews.filter((review) => review.rating > 3 && review.rating <= 4)
+      .length,
+    5: reviews.filter((review) => review.rating > 4 && review.rating <= 5)
+      .length,
+  };
 
   return (
     <>
@@ -15,9 +26,14 @@ export default function ReviewSummary({ album }) {
             Reviews
           </Typography>
           <Typography variant="h3" gutterBottom sx={{ color: "black" }}>
-            {rating}
+            {album.rating}
           </Typography>
-          <Rating name="read-only" value={rating} precision={0.5} readOnly />
+          <Rating
+            name="read-only"
+            value={album.rating}
+            precision={0.5}
+            readOnly
+          />
           <Typography
             variant="h6"
             gutterBottom
@@ -27,7 +43,7 @@ export default function ReviewSummary({ album }) {
           </Typography>
         </div>
         <div id="linear-rating">
-          <RatingBars stats={{ 5: 12, 4: 7, 3: 3, 2: 1, 1: 0 }} />
+          <RatingBars stats={reviewsStats} />
         </div>
       </div>
     </>

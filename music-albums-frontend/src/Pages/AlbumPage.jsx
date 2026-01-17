@@ -10,35 +10,35 @@ export default function AlbumPage({ isAdmin }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    async function getAlbum(_id) {
-      try {
-        const response = await fetch(`http://localhost:3000/albums/${_id}`);
-        const data = await response.json();
-        setAlbum(data);
-      } catch (err) {
-        console.log("Couldnt fetch album ", _id);
-      }
-    }
-    async function getReviews(_id) {
-      try {
-        const response = await fetch(`http://localhost:3000/reviews/${_id}`);
-        const data = await response.json();
-        setReviews(data);
-      } catch (err) {
-        console.log("Couldnt get reviews ", err);
-      }
-    }
-    getAlbum(_id);
-    getReviews(_id);
+    fetchAlbumData();
   }, [_id]);
+
+  async function fetchAlbumData() {
+    try {
+      const [albumResponse, reviewsResponse] = await Promise.all([
+        fetch(`http://localhost:3000/albums/${_id}`),
+        fetch(`http://localhost:3000/reviews/${_id}`),
+      ]);
+      const albumData = await albumResponse.json();
+      const reviewsData = await reviewsResponse.json();
+      setAlbum(albumData);
+      setReviews(reviewsData);
+    } catch (err) {
+      console.log("Couldn't fetch album data ", err);
+    }
+  }
 
   return (
     <>
       {album && (
         <div id="album-page">
           <AlbumHeader album={album} />
-          <ReviewSummary album={album} />
-          <ReviewsList reviews={reviews} albumId={_id} />
+          <ReviewSummary album={album} reviews={reviews} />
+          <ReviewsList
+            reviews={reviews}
+            albumId={_id}
+            onReviewAdded={fetchAlbumData}
+          />
         </div>
       )}
     </>

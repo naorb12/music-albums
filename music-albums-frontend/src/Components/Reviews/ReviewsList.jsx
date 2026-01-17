@@ -13,10 +13,10 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
-export default function ReviewsList({ reviews, albumId }) {
+export default function ReviewsList({ reviews, albumId, onReviewAdded }) {
   async function handleAddReview(albumId, newRating, comment) {
     try {
-      const token = localStorage["token"];
+      const token = sessionStorage.getItem("token");
       const response = await fetch(`http://localhost:3000/reviews/${albumId}`, {
         method: "POST",
         headers: {
@@ -28,6 +28,11 @@ export default function ReviewsList({ reviews, albumId }) {
           comment: comment,
         }),
       });
+      if (response.ok) {
+        await onReviewAdded();
+      } else {
+        console.log("Failed to add a review, status: ", response);
+      }
     } catch (err) {
       console.log("Couldnt add review ", err);
     }
