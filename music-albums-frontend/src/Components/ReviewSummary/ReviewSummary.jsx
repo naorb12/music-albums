@@ -4,18 +4,16 @@ import Typography from "@mui/material/Typography";
 import RatingBars from "./RatingBars";
 
 export default function ReviewSummary({ album, reviews }) {
-  console.log(reviews);
   const reviewsStats = {
-    1: reviews.filter((review) => review.rating > 0 && review.rating <= 1)
+    1: reviews.filter((review) => review.rating > 0 && review.rating <= 1.5)
       .length,
-    2: reviews.filter((review) => review.rating > 1 && review.rating <= 2)
+    2: reviews.filter((review) => review.rating >= 2 && review.rating <= 2.5)
       .length,
-    3: reviews.filter((review) => review.rating > 2 && review.rating <= 3)
+    3: reviews.filter((review) => review.rating >= 3 && review.rating <= 3.5)
       .length,
-    4: reviews.filter((review) => review.rating > 3 && review.rating <= 4)
+    4: reviews.filter((review) => review.rating >= 4 && review.rating <= 4.5)
       .length,
-    5: reviews.filter((review) => review.rating > 4 && review.rating <= 5)
-      .length,
+    5: reviews.filter((review) => review.rating === 5).length,
   };
 
   return (
