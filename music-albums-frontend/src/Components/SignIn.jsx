@@ -20,7 +20,8 @@ export default function SigIn({ setUser }) {
       if (response.status === 200) {
         const { token } = await response.json();
         setUser(userName);
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userName", userName);
         navigate("/albums");
       } else if (response.status === 401) {
         setErrorLabel("User or Password don't match");

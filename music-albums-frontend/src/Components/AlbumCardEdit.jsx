@@ -59,7 +59,7 @@ export default function AlbumCardEdit({
         onChange={(e) => setNewGenre(e.target.value)}
         size="small"
       />
-      <Rating name="disabled" value={album.rating} disabled>
+      <Rating name="disabled" value={album.rating} precision={0.5} disabled>
         {album.reviewsCount}
       </Rating>
       <div>

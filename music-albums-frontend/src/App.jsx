@@ -7,7 +7,9 @@ import AlbumPage from "./Pages/AlbumPage";
 import SignInPage from "./Pages/SignInPage";
 
 function App() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(
+    () => sessionStorage.getItem("userName") || ""
+  );
   const isAdmin = user === "1";
 
   return (

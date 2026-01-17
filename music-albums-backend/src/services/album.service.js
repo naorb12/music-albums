@@ -16,7 +16,6 @@ export async function getAllAlbums() {
 
 export async function getAlbumById(id) {
   try {
-    console.log("Trying to find album ", id);
     return await albumsCollection.findOne({ _id: new ObjectId(id) });
   } catch {
     console.log("couldnt get album by id");

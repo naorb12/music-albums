@@ -3,15 +3,28 @@ import {
   calcReviewsAndUpdate,
   getAlbumById,
 } from "../services/album.service.js";
-import { addReview } from "../services/reviews.service.js";
+import { getReviewsByAlbumId, addReview } from "../services/reviews.service.js";
 import { auth } from "../middlewares/auth.js";
 const router = new Router();
 
-router.get("/:id", async (req, res) => {});
+router.get("/:albumId", async (req, res) => {
+  const { albumId } = req.params;
+  try {
+    if (!albumId) {
+      console.log("No album ID!");
+      return res.status(404).json({ error: "No album ID" });
+    }
+    const reviews = await getReviewsByAlbumId(albumId);
+    res.status(200).json(reviews);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Can't find reviews" });
+  }
+});
 
 router.post("/:albumId", auth, async (req, res) => {
   const { albumId } = req.params;
-  const { rating } = req.body;
+  const { rating, comment } = req.body;
   const userId = req.user.id;
 
   if (
@@ -30,7 +43,7 @@ router.post("/:albumId", auth, async (req, res) => {
       return res.status(404).json({ error: "Album doesn't exist" });
     }
 
-    const countAdded = await addReview(userId, albumId, rating);
+    const countAdded = await addReview(userId, albumId, rating, comment);
     await calcReviewsAndUpdate(albumId, rating, countAdded);
     res.status(200).json({ message: "Review added" });
   } catch (err) {

@@ -33,7 +33,8 @@ export default function Header({ user, setUser }) {
                 variant="body2"
                 onClick={() => {
                   setUser("");
-                  localStorage.removeItem("token");
+                  sessionStorage.removeItem("token");
+                  sessionStorage.removeItem("userName");
                 }}
                 color="inherit"
               >

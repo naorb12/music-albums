@@ -33,7 +33,7 @@ export default function AlbumCardView({
           {album.year}
         </Typography>
         {rating && (
-          <Rating name="disabled" value={album.rating} disabled>
+          <Rating name="disabled" value={album.rating} precision={0.5} disabled>
             {album.reviewsCount}
           </Rating>
         )}
