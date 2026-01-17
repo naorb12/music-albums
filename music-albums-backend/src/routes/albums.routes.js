@@ -6,6 +6,7 @@ import {
   updateAlbum,
   deleteAlbum,
 } from "../services/album.service.js";
+import { deleteReviewsByAlbumId } from "../services/reviews.service.js";
 
 const router = new Router();
 
@@ -78,7 +79,7 @@ router.delete("/:id", async (req, res) => {
     if (!id) {
       return res.status(400).json({ error: "No id" });
     }
-
+    await deleteReviewsByAlbumId(id);
     const result = await deleteAlbum(id);
     if (result.deletedCount !== 1) {
       return res.status(400).json({ error: "Album not deleted" });

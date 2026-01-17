@@ -15,7 +15,7 @@ export async function addReview(userId, albumId, rating, comment) {
       const createdAt = new Date();
       await reviewsCollection.updateOne(
         { _id: review._id },
-        { $set: { rating, comment, createdAt } }
+        { $set: { rating, comment, createdAt } },
       );
     } else {
       addedReviews += 1;
@@ -33,7 +33,17 @@ export async function addReview(userId, albumId, rating, comment) {
     throw err;
   }
 }
-
+export async function deleteReviewsByAlbumId(albumId) {
+  try {
+    const reviewsDeleted = await reviewsCollection.deleteMany({
+      albumId: albumId,
+    });
+    console.log("Deleted ", reviewsDeleted, " reviews");
+  } catch (err) {
+    console.log("Service: Couldn't delete reviews ");
+    throw err;
+  }
+}
 export async function getReviewsByAlbumId(albumId) {
   try {
     const reviews = await reviewsCollection
