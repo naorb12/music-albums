@@ -4,19 +4,29 @@ export default function Header({ user, setUser }) {
   const navigate = useNavigate();
   const path = useLocation();
 
-  const showHeader = path.pathname !== "/sign-in";
+  const isSignInPage = path.pathname === "/sign-in";
   return (
     <>
-      {showHeader && (
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: "0",
-            maxWidth: "100%",
-          }}
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "left",
+          gap: "10px",
+          margin: "0",
+          maxWidth: "100%",
+        }}
+      >
+        <Link
+          component="button"
+          variant="body2"
+          onClick={() => navigate("/")}
+          color="inherit"
         >
-          {user === "" ? (
+          {" "}
+          Home
+        </Link>
+        {!isSignInPage &&
+          (user === "" ? (
             <Link
               component="button"
               variant="body2"
@@ -41,9 +51,8 @@ export default function Header({ user, setUser }) {
                 Log Out
               </Link>
             </div>
-          )}
-        </header>
-      )}
+          ))}
+      </header>
     </>
   );
 }
