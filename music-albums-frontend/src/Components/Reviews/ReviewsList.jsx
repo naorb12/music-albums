@@ -6,7 +6,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Rating from "@mui/material/Rating";
 import AddReview from "./AddReview";
-import { isLoggedIn } from "../../utils/auth";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
@@ -36,9 +35,7 @@ export default function ReviewsList({ reviews, albumId }) {
 
   return (
     <>
-      {isLoggedIn() && (
-        <AddReview albumId={albumId} onAddReview={handleAddReview} />
-      )}
+      <AddReview albumId={albumId} onAddReview={handleAddReview} />
       <Paper elevation={2} sx={{ maxHeight: 400, overflowY: "auto", mt: 3 }}>
         <List>
           {reviews.map((review) => (

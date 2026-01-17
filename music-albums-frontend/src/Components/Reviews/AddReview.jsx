@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./AddReview.css";
+import { isLoggedIn } from "../../utils/auth";
 
 const labels = {
   0.5: "Unlistenable",
@@ -72,15 +73,19 @@ export default function AddReview({ albumId, onAddReview }) {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-
-      <Button
-        variant="contained"
-        sx={{ mt: 2 }}
-        disabled={!rating}
-        onClick={handleSubmit}
-      >
-        Submit Review
-      </Button>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          disabled={!rating || !isLoggedIn()}
+          onClick={handleSubmit}
+        >
+          Submit Review
+        </Button>
+        {!isLoggedIn() && (
+          <label id="sign-in-error">Sign in to submit a review.</label>
+        )}
+      </Box>
     </Paper>
   );
 }
