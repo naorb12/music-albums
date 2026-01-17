@@ -7,9 +7,11 @@ export default function ({ album }) {
     <div id="album-header-wrapper">
       <img
         src={
-          album.albumCoverURL.filter((url) => url.size === "extralarge")[0][
-            "#text"
-          ]
+          album.albumCoverURL
+            ? album.albumCoverURL.filter((url) => url.size === "extralarge")[0][
+                "#text"
+              ]
+            : null
         }
         alt={album.title}
       />

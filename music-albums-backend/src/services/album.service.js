@@ -31,10 +31,10 @@ export async function addAlbum(album) {
     });
     if (exist) {
       console.log(
-        "Album " + album.title + " by " + album.artist + " already exists."
+        "Album " + album.title + " by " + album.artist + " already exists.",
       );
       throw new Error(
-        "Album " + album.title + " by " + album.artist + " already exists."
+        "Album " + album.title + " by " + album.artist + " already exists.",
       );
     }
     const albumCoverURLS = await getAlbumCover(album.title, album.artist);
@@ -63,7 +63,7 @@ export async function updateAlbum(id, album) {
     return await albumsCollection.findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: updatedAlbum },
-      { returnDocument: "after" }
+      { returnDocument: "after" },
     );
   } catch (err) {
     throw new Error("Couldnt fetch album covers");
@@ -107,9 +107,13 @@ async function getAlbumCover(title, artist) {
     const newArtist = artist.replaceAll(" ", "+");
 
     const response = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${process.env.LAST_FM_API_KEY}&artist=${newArtist}&album=${newTitle}&format=json`
+      `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${process.env.LAST_FM_API_KEY}&artist=${newArtist}&album=${newTitle}&format=json`,
     );
     const data = await response.json();
+    if (!data.album || !data.album.image) {
+      console.log(`No album cover found for ${title} by ${artist}`);
+      return null;
+    }
     const imagesURLS = data.album.image;
 
     return imagesURLS;
@@ -125,7 +129,7 @@ async function getAlbumLinks(title, artist) {
   let appleMusic = "https://music.apple.com/";
   try {
     const response = await fetch(
-      `https://itunes.apple.com/search?term=album+${title.trim()}+${artist.trim()}&entity=album`
+      `https://itunes.apple.com/search?term=album+${title.trim()}+${artist.trim()}&entity=album`,
     );
     const data = await response.json();
 
