@@ -126,7 +126,7 @@ export default function HomePage({ isAdmin }) {
   }, []);
 
   return (
-    <div>
+    <div id="home-page">
       <h1 className="page-title">albums on repeat.</h1>
       <InsertAlbum onClick={addAlbum} setErrorLabel={setErrorLabel} />
       {errorLabel && <label color="red">{errorLabel}</label>}

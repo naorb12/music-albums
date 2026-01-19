@@ -18,6 +18,7 @@ export default function AlbumCard({
   return (
     <>
       <Card
+        className="album-card"
         component={Link}
         to={`/albums/id/${album._id}`}
         sx={{
@@ -25,8 +26,6 @@ export default function AlbumCard({
           color: "inherit",
           display: "flex",
           flexDirection: "column",
-          padding: "0px",
-          margin: "6px",
           alignItems: "center",
           backgroundColor: "#faeed7ff",
         }}

@@ -32,13 +32,15 @@ export default function AlbumPage({ isAdmin }) {
     <>
       {album && (
         <div id="album-page">
-          <AlbumHeader album={album} />
-          <ReviewSummary album={album} reviews={reviews} />
-          <ReviewsList
-            reviews={reviews}
-            albumId={_id}
-            onReviewAdded={fetchAlbumData}
-          />
+          <div>
+            <AlbumHeader album={album} />
+            <ReviewSummary album={album} reviews={reviews} />
+            <ReviewsList
+              reviews={reviews}
+              albumId={_id}
+              onReviewAdded={fetchAlbumData}
+            />
+          </div>
         </div>
       )}
     </>

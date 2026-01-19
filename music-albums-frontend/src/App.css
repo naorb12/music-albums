@@ -1,7 +1,12 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
+}
+
+#home-page {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .page-title {
@@ -29,17 +34,21 @@
 }
 
 .album-grid {
-  display: flex;
-  justify-content: start;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(166px, 1fr));
+  gap: clamp(5px, 1.1vw, 8px);
+  justify-items: center;
+  width: 100%;
+}
+
+.album-card {
+  margin: 0;
 }
 
 #album-page {
   width: 800px;
   max-width: 100%;
+  margin: 24px auto;
 }
 
 @keyframes logo-spin {

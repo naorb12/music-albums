@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import "./SignIn.css";
 
 export default function SigIn({ setUser }) {
   const navigate = useNavigate();
@@ -31,7 +32,8 @@ export default function SigIn({ setUser }) {
     }
   }
   return (
-    <Stack spacing={1}>
+    <Stack id="sign-in-stack" spacing={1}>
+      <h2>Please Sign In:</h2>
       <TextField
         value={userName}
         id="outlined-basic"
