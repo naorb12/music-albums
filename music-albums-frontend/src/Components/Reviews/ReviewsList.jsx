@@ -66,6 +66,7 @@ export default function ReviewsList({ reviews, albumId, onReviewAdded }) {
               />
               <ListItemText
                 primary={dateFormatter.format(new Date(review.createdAt))}
+                sx={{ textAlign: "right" }}
               />
             </ListItem>
           ))}
