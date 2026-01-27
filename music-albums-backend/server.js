@@ -17,8 +17,13 @@ app.listen(port, () => {
   console.log("Listening on port " + port);
 });
 
-await runDatabaseConnect();
-
+try {
+  await runDatabaseConnect();
+  console.log("Database connected successfully");
+} catch (errr) {
+  console.error("Failed to connetct to db: ", err);
+  process.exit(1);
+}
 app.use("/albums", albumRoutes);
 app.use("/users", userRoutes);
 app.use("/reviews", reviewRoutes);
