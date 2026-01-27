@@ -20,7 +20,7 @@ app.listen(port, () => {
 try {
   await runDatabaseConnect();
   console.log("Database connected successfully");
-} catch (errr) {
+} catch (err) {
   console.error("Failed to connetct to db: ", err);
   process.exit(1);
 }
