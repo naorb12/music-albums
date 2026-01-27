@@ -22,10 +22,10 @@ export default function ({ album }) {
         <Typography variant="h5" gutterBottom sx={{ color: "black" }}>
           {album.artist}
         </Typography>
-        <Typography variant="h6" gutterBottom sx={{ color: "gray" }}>
+        <Typography variant="h6" gutterBottom sx={{ color: "#313131" }}>
           {album.year}
         </Typography>
-        <Typography variant="h6" gutterBottom sx={{ color: "gray" }}>
+        <Typography variant="h6" gutterBottom sx={{ color: "#313131" }}>
           {album.genre}
         </Typography>
         <div id="links">

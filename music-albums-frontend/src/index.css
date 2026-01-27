@@ -5,14 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #c7c3c3;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,6 +18,18 @@ a:hover {
 body {
   display: flex;
   place-items: center;
+  background: #3e5151; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #decba4,
+    #3e5151
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #decba4,
+    #3e5151
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-attachment: fixed;
 }
 
 h1 {

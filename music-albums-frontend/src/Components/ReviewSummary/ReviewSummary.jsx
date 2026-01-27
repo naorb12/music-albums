@@ -35,7 +35,7 @@ export default function ReviewSummary({ album, reviews }) {
           <Typography
             variant="h6"
             gutterBottom
-            sx={{ color: "gray", paddingLeft: 0.5 }}
+            sx={{ color: "#313131", paddingLeft: 0.5 }}
           >
             {album.reviewsCount} reviews
           </Typography>
