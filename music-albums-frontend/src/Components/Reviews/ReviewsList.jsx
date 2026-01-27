@@ -17,17 +17,20 @@ export default function ReviewsList({ reviews, albumId, onReviewAdded }) {
   async function handleAddReview(albumId, newRating, comment) {
     try {
       const token = sessionStorage.getItem("token");
-      const response = await fetch(`http://localhost:3000/reviews/${albumId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER}reviews/${albumId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            rating: newRating,
+            comment: comment,
+          }),
         },
-        body: JSON.stringify({
-          rating: newRating,
-          comment: comment,
-        }),
-      });
+      );
       if (response.ok) {
         await onReviewAdded();
       } else {

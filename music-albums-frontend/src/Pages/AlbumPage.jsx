@@ -16,8 +16,8 @@ export default function AlbumPage({ isAdmin }) {
   async function fetchAlbumData() {
     try {
       const [albumResponse, reviewsResponse] = await Promise.all([
-        fetch(`http://localhost:3000/albums/${_id}`),
-        fetch(`http://localhost:3000/reviews/${_id}`),
+        fetch(`${import.meta.env.VITE_SERVER}albums/${_id}`),
+        fetch(`${import.meta.env.VITE_SERVER}reviews/${_id}`),
       ]);
       const albumData = await albumResponse.json();
       const reviewsData = await reviewsResponse.json();

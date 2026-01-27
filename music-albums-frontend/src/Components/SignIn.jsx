@@ -13,11 +13,14 @@ export default function SigIn({ setUser }) {
 
   async function handleSignIn() {
     try {
-      const response = await fetch("http://localhost:3000/users/sign-in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userName: userName, password: password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER}users/sign-in`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userName: userName, password: password }),
+        },
+      );
       if (response.status === 200) {
         const { token } = await response.json();
         setUser(userName);

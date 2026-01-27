@@ -8,7 +8,7 @@ export default function HomePage({ isAdmin }) {
 
   async function getAlbums() {
     try {
-      const response = await fetch("http://localhost:3000/albums");
+      const response = await fetch(`${import.meta.env.VITE_SERVER}albums`);
       const data = await response.json();
       setAlbums(data);
     } catch (err) {
@@ -39,7 +39,7 @@ export default function HomePage({ isAdmin }) {
           const newAlbums = [...prev, newAlbum];
           return newAlbums;
         });
-        const result = await fetch("http://localhost:3000/albums", {
+        const result = await fetch(`${import.meta.env.VITE_SERVER}albums`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -89,17 +89,20 @@ export default function HomePage({ isAdmin }) {
         });
         return newAlbums;
       });
-      const response = await fetch(`http://localhost:3000/albums/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: id,
-          title: title,
-          artist: artist,
-          year: year,
-          genre: genre,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER}albums/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: id,
+            title: title,
+            artist: artist,
+            year: year,
+            genre: genre,
+          }),
+        },
+      );
       const data = await response.json();
       getAlbums();
     } catch (err) {
@@ -111,7 +114,7 @@ export default function HomePage({ isAdmin }) {
     console.log("Deleting album ", id);
     try {
       setAlbums((albums) => albums.filter((album) => album._id !== id));
-      const res = await fetch(`http://localhost:3000/albums/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER}albums/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
