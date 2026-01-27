@@ -7,7 +7,7 @@ import "dotenv/config";
 
 import { runDatabaseConnect } from "./src/database/database-client.js";
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 const app = express();
 
 app.use(cors());
@@ -29,10 +29,10 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.use("/albums", albumRoutes);
-app.use("/users", userRoutes);
-app.use("/reviews", reviewRoutes);
-
 app.listen(port, () => {
   console.log("Listening on port " + port);
 });
+
+app.use("/albums", albumRoutes);
+app.use("/users", userRoutes);
+app.use("/reviews", reviewRoutes);
