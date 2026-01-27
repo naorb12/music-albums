@@ -13,10 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.listen(port, () => {
-  console.log("Listening on port " + port);
-});
-
 try {
   await runDatabaseConnect();
   console.log("Database connected successfully");
@@ -24,6 +20,11 @@ try {
   console.error("Failed to connetct to db: ", err);
   process.exit(1);
 }
+
 app.use("/albums", albumRoutes);
 app.use("/users", userRoutes);
 app.use("/reviews", reviewRoutes);
+
+app.listen(port, () => {
+  console.log("Listening on port " + port);
+});
