@@ -3,10 +3,11 @@ import cors from "cors";
 import userRoutes from "./src/routes/users.routes.js";
 import albumRoutes from "./src/routes/albums.routes.js";
 import reviewRoutes from "./src/routes/reviews.routes.js";
+import "dotenv/config";
 
 import { runDatabaseConnect } from "./src/database/database-client.js";
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors());
