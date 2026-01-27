@@ -21,13 +21,13 @@ try {
   process.exit(1);
 }
 
-// app.get("/", (req, res) => {
-//   res.json({ status: "ok", message: "Music Albums API is running." });
-// });
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "Music Albums API is running." });
+});
 
-// app.get("/health", (req, res) => {
-//   res.json({ status: "ok" });
-// });
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
 
 app.use("/albums", albumRoutes);
 app.use("/users", userRoutes);
