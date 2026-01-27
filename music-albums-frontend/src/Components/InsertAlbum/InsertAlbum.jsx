@@ -1,24 +1,51 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./InsertAlbum.css";
+import { isLoggedIn } from "../../utils/auth";
 
 export default function InsertAlbum({ onClick, setErrorLabel }) {
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
+  const [message, setMessage] = useState(null);
 
   function resetInputs() {
     setTitle("");
     setArtist("");
     setYear("");
     setGenre("");
+    setMessage(null);
+  }
+
+  const isLoggedAndValid = () => {
+    const token = sessionStorage.getItem("token");
+
+    if (
+      token !== null &&
+      title !== "" &&
+      artist !== "" &&
+      year !== "" &&
+      genre !== ""
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  function buttonForUser() {
+    if (isLoggedIn()) {
+      setMessage(null);
+    } else {
+      setMessage("Please login to add an album.");
+    }
   }
 
   return (
-    <>
-      <div className="form-wrapper">
+    <div id="form-wrapper">
+      <div className="form">
         <TextField
           className="text-field"
           required
@@ -31,6 +58,7 @@ export default function InsertAlbum({ onClick, setErrorLabel }) {
           variant="standard"
           onChange={(e) => {
             setTitle(e.target.value);
+            buttonForUser();
             setErrorLabel("");
           }}
         />
@@ -46,6 +74,7 @@ export default function InsertAlbum({ onClick, setErrorLabel }) {
           variant="standard"
           onChange={(e) => {
             setArtist(e.target.value);
+            buttonForUser();
             setErrorLabel("");
           }}
         />
@@ -61,6 +90,7 @@ export default function InsertAlbum({ onClick, setErrorLabel }) {
           variant="standard"
           onChange={(e) => {
             setYear(e.target.value);
+            buttonForUser();
           }}
         />
         <TextField
@@ -75,23 +105,26 @@ export default function InsertAlbum({ onClick, setErrorLabel }) {
           variant="standard"
           onChange={(e) => {
             setGenre(e.target.value);
+            buttonForUser();
           }}
         />
-        <Button
-          className="add-button"
-          variant="outlined"
-          type="submit"
-          onClick={() => {
-            onClick(title, artist, year, genre);
-            resetInputs();
-          }}
-          disabled={
-            title === "" || artist === "" || year === "" || genre === ""
-          }
-        >
-          Add Album
-        </Button>
+        <div className="button-stack">
+          <Button
+            className="add-button"
+            variant="outlined"
+            type="submit"
+            onClick={() => {
+              onClick(title, artist, year, genre);
+              resetInputs();
+            }}
+            sx={{ maxWidth: "118px" }}
+            disabled={!isLoggedAndValid()}
+          >
+            Add Album
+          </Button>
+          {message && <label id="error">{message}</label>}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

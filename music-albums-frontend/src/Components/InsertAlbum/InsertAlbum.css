@@ -1,4 +1,9 @@
-.form-wrapper {
+.button-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -12,4 +17,8 @@
 
 .add-button {
   margin: 5px;
+}
+
+#error {
+  color: rgba(255, 255, 0, 0.856);
 }
