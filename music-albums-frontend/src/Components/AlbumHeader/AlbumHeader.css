@@ -19,3 +19,12 @@ img {
   width: 300px;
   height: 300px;
 }
+
+@media (max-width: 768px) {
+  #album-header-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: self-start;
+    gap: 24px;
+  }
+}

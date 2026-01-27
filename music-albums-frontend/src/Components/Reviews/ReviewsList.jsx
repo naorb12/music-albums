@@ -44,7 +44,11 @@ export default function ReviewsList({ reviews, albumId, onReviewAdded }) {
   return (
     <>
       <AddReview albumId={albumId} onAddReview={handleAddReview} />
-      <Paper elevation={2} sx={{ maxHeight: 400, overflowY: "auto", mt: 3 }}>
+      <Paper
+        className="reviews-wrapper"
+        elevation={2}
+        sx={{ maxHeight: 400, overflowY: "auto", mt: 3 }}
+      >
         <List>
           {reviews.map((review) => (
             <ListItem key={review._id} alignItems="flex-start">

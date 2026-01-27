@@ -1,6 +1,7 @@
 #rating-wrapper {
   display: flex;
   justify-content: space-between;
+  margin-top: 24px;
 }
 
 #rating {
@@ -9,4 +10,19 @@
 
 #linear-rating {
   padding: 15px;
+}
+
+@media (max-width: 768px) {
+  #rating-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .reviews-wrapper {
+    width: 80%;
+  }
+
+  #linear-rating {
+    padding: 0px;
+  }
 }

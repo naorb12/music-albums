@@ -7,3 +7,9 @@
   margin: 4px;
   color: red;
 }
+
+@media (max-width: 768px) {
+  .add-review-box {
+    width: 75%;
+  }
+}
