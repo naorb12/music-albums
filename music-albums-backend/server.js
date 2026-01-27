@@ -7,7 +7,7 @@ import "dotenv/config";
 
 import { runDatabaseConnect } from "./src/database/database-client.js";
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 const app = express();
 
 app.use(cors());
@@ -20,6 +20,14 @@ try {
   console.error("Failed to connetct to db: ", err);
   process.exit(1);
 }
+
+// app.get("/", (req, res) => {
+//   res.json({ status: "ok", message: "Music Albums API is running." });
+// });
+
+// app.get("/health", (req, res) => {
+//   res.json({ status: "ok" });
+// });
 
 app.use("/albums", albumRoutes);
 app.use("/users", userRoutes);
