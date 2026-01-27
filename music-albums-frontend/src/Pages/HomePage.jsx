@@ -124,10 +124,6 @@ export default function HomePage({ isAdmin }) {
     }
   }
 
-  useEffect(() => {
-    getAlbums();
-  }, []);
-
   return (
     <div id="home-page">
       <h1 className="page-title">albums on repeat.</h1>
