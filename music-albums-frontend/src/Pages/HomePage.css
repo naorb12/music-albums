@@ -1,0 +1,63 @@
+.masking-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.masked-text {
+  font-size: 6rem;
+  font-weight: bold;
+  font-family: "Arial Black", sans-serif;
+  color: transparent;
+  background-size: 115% 115%;
+  background-position: 0 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.7);
+  animation: animate-background 3s infinite alternate linear;
+  margin: 1rem;
+  padding: 1rem 0;
+  letter-spacing: 0.1em;
+  transform: scaleY(1.5);
+  line-height: 0.9;
+}
+
+@keyframes animate-background {
+  0% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .masking-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    width: 320px;
+  }
+
+  .masked-text {
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: "Arial Black", sans-serif;
+    color: transparent;
+    background-size: 150%;
+    background-position: 0 50%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.7);
+    animation: animate-background 4s infinite alternate linear; /* Changed from 5s to 3s */
+    margin: 1rem;
+    padding: 1rem 0;
+    letter-spacing: 0.1em;
+    transform: scaleY(1.5); /* Stretches text vertically */
+    width: 300px;
+  }
+}

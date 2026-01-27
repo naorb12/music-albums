@@ -1,16 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
 import AlbumGrid from "../Components/AlbumGrid";
 import InsertAlbum from "../Components/InsertAlbum/InsertAlbum.jsx";
+import "./HomePage.css";
 
 export default function HomePage({ isAdmin }) {
   const [albums, setAlbums] = useState([]);
   const [errorLabel, setErrorLabel] = useState();
+  const [backgroundImage, setBackgroundImage] = useState("");
 
   async function getAlbums() {
     try {
       const response = await fetch(`${import.meta.env.VITE_SERVER}albums`);
       const data = await response.json();
       setAlbums(data);
+
+      if (data.length > 0 && !backgroundImage) {
+        const randomAlbum = data[Math.floor(Math.random() * data.length)];
+        setBackgroundImage(
+          randomAlbum.albumCoverURL.filter((url) => url.size === "mega")[0][
+            "#text"
+          ],
+        );
+      }
     } catch (err) {
       console.log(err);
     }
@@ -126,7 +137,14 @@ export default function HomePage({ isAdmin }) {
 
   return (
     <div id="home-page">
-      <h1 className="page-title">albums on repeat.</h1>
+      <div className="masking-container">
+        <h1
+          className="masked-text"
+          style={{ backgroundImage: `url('${backgroundImage}')` }}
+        >
+          albums on repeat
+        </h1>
+      </div>
       <InsertAlbum onClick={addAlbum} setErrorLabel={setErrorLabel} />
       {errorLabel && <label color="red">{errorLabel}</label>}
       {albums.length > 0 && (
